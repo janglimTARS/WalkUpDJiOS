@@ -11,4 +11,8 @@ enum SpotifyConfig {
         }
         return url
     }
+
+    static var isConfigured: Bool {
+        clientID != "YOUR_SPOTIFY_CLIENT_ID" && !clientID.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
 }

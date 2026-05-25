@@ -41,14 +41,30 @@ Also add the same redirect URI in the Spotify Developer Dashboard for your app.
 
 ## Spotify SDK note
 
-The current repo compiles as a clean SwiftUI prototype without vendoring the Spotify iOS SDK or secrets. `SpotifyAppRemoteController` is written as a documented adapter boundary with mock behavior so the UI can be built immediately.
+This repo is wired for real online mode using the Spotify iOS SDK / App Remote API, while still compiling in a SDK-missing fallback state using `#if canImport(SpotifyiOS)`.
 
-To enable real playback:
+To enable real playback on your MacBook:
 
-1. Add the Spotify iOS SDK to the Xcode project.
-2. Replace the marked TODO sections in `SpotifyAppRemoteController.swift` with `SPTSessionManager` and `SPTAppRemote` calls.
-3. Add any required URL schemes / Info.plist entries required by the SDK version you use.
-4. Test on a physical iPhone with Spotify installed and logged into Premium.
+1. Download the latest Spotify iOS SDK release from `https://github.com/spotify/ios-sdk/releases`.
+2. Add `SpotifyiOS.xcframework` to the Xcode project target: **General → Frameworks, Libraries, and Embedded Content**.
+3. Set it to **Embed & Sign**.
+4. Confirm `Info.plist` contains:
+   - URL scheme: `walkupdjios`
+   - `LSApplicationQueriesSchemes`: `spotify`
+5. Edit `WalkUpDJiOS/Services/SpotifyConfig.swift` with your Spotify Client ID.
+6. In the Spotify Developer Dashboard, add:
+   - Bundle ID: `com.anglim.walkupdjios`
+   - Redirect URI: `walkupdjios://spotify-login-callback`
+7. Build to a physical iPhone with the Spotify app installed and logged into Premium.
+
+The controller already calls:
+
+- `SPTAppRemote.authorizeAndPlayURI(...)`
+- `handleOpenURL(...)` to collect the access token
+- `appRemote.connect()`
+- `playerAPI.play(uri)`
+- `playerAPI.seek(toPosition: start_ms)`
+- `playerAPI.pause()` after 12 seconds
 
 ## App flow
 

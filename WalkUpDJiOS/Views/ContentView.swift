@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var spotify = SpotifyAppRemoteController()
+    @StateObject private var spotify = SpotifyAppRemoteController.shared
     @State private var roster = PlayerWalkUp.sampleRoster
     @State private var selectedPlayer = PlayerWalkUp.sampleRoster[0]
     @State private var startMSText = String(PlayerWalkUp.sampleRoster[0].startMS)
