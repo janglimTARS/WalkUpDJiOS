@@ -23,7 +23,7 @@ This repo is intentionally small and secret-free. It demonstrates the app struct
 ## Clone and open
 
 ```bash
-git clone <REMOTE_URL>
+git clone https://github.com/janglimTARS/WalkUpDJiOS.git
 cd WalkUpDJiOS
 open WalkUpDJiOS.xcodeproj
 ```
