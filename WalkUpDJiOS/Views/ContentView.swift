@@ -16,7 +16,7 @@ struct ContentView: View {
             }
             .padding()
             .navigationTitle("Walk-Up DJ")
-            .onChange(of: selectedPlayer) { _, newValue in
+            .onChange(of: selectedPlayer) { newValue in
                 startMSText = String(newValue.startMS)
             }
         }
